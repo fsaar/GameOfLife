@@ -19,7 +19,13 @@ extension CGPoint : Hashable {
 
 @objc class SABoardViewController: UIViewController {
     var timer : SATimer?
-    var board : SAGOLBoard = SAGOLBoard(rows: 0, columns: 0)
+    var board : SAGOLBoard = SAGOLBoard(rows: 0, columns: 0) {
+        willSet(newBoard) {
+            if (board.columns == newBoard.columns && board.rows == newBoard.rows) {
+                self.transitionBoard(from: board, to: newBoard)
+            }
+        }
+    }
     var imageViewList : [CGPoint : UIImageView] = [:]
     var boardSize : CGSize {
         let viewSize = self.view.frame.size
@@ -36,8 +42,7 @@ extension CGPoint : Hashable {
         
         self.timer = SATimer(timerInterVal: 1.2, timerHandler: { [weak self] _ in
             let newBoard = self?.board.processBoard()
-            if let newBoard = newBoard , oldBoard = self?.board {
-                self?.transitionBoard(from: oldBoard, to: newBoard)
+            if let newBoard = newBoard  {
                 self?.board = newBoard
             }
         })
@@ -55,15 +60,11 @@ extension CGPoint : Hashable {
 extension SABoardViewController {
     
     private func transitionBoard(from from: SAGOLBoard, to: SAGOLBoard) {
-        for col in 0..<board.columns {
-            for row in 0..<board.rows {
-                let oldState = from[col,row]
-                let newState = to[col,row]
-                if let oldState = oldState , newState = newState where newState != oldState,
-                    let imageView = self.imageViewList[CGPoint(x: col, y: row)] {
-                        setImageViewState(imageView, state: newState,animated: true)
-                }
-                
+        for (col,row,oldState) in from {
+            let newState = to[col,row]
+            if let newState = newState where newState != oldState,
+                let imageView = self.imageViewList[CGPoint(x: col, y: row)] {
+                    setImageViewState(imageView, state: newState,animated: true)
             }
         }
 
@@ -115,16 +116,12 @@ extension SABoardViewController {
     }
     
     private func showBoard(animated : Bool = false) {
-        for col in 0..<board.columns {
-            for row in 0..<board.rows {
-                let imageView = imageViewForPosition(column: col, row: row)
-                self.imageViewList[CGPoint(x: col, y: row)] = imageView
-                self.view .addSubview(imageView)
-                let isAlive = board[col,row] == .Alive
-                imageView.hidden = isAlive ? false : true
-                setImageViewState(imageView, state: isAlive ? .Alive : .Dead)
-                
-            }
+        for (col,row,state) in board {
+            let imageView = imageViewForPosition(column: col, row: row)
+            self.imageViewList[CGPoint(x: col, y: row)] = imageView
+            self.view .addSubview(imageView)
+            imageView.hidden = state == .Alive ? false : true
+            setImageViewState(imageView, state: state)
         }
         
     }

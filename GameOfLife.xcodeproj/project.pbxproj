@@ -38,6 +38,7 @@
 		561A99101C5800F800673D0E /* SABoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SABoardViewController.swift; sourceTree = "<group>"; };
 		561A99131C58014C00673D0E /* SAGOLBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SAGOLBoard.swift; sourceTree = "<group>"; };
 		561A99151C5813B100673D0E /* SATimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SATimer.swift; sourceTree = "<group>"; };
+		561A99171C5831CF00673D0E /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +80,7 @@
 		561A98ED1C58007500673D0E /* GameOfLife */ = {
 			isa = PBXGroup;
 			children = (
+				561A99171C5831CF00673D0E /* MyPlayground.playground */,
 				561A990E1C5800F800673D0E /* Code */,
 				561A98F21C58007500673D0E /* Main.storyboard */,
 				561A98F51C58007500673D0E /* Assets.xcassets */,
