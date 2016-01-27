@@ -18,16 +18,16 @@ extension CGPoint : Hashable {
 }
 
 @objc class SABoardViewController: UIViewController {
-    var timer : SATimer?
-    var board : SAGOLBoard = SAGOLBoard(rows: 0, columns: 0) {
+    private var timer : SATimer?
+    private var board : SAGOLBoard = SAGOLBoard(rows: 0, columns: 0) {
         willSet(newBoard) {
             if (board.columns == newBoard.columns && board.rows == newBoard.rows) {
                 self.transitionBoard(from: board, to: newBoard)
             }
         }
     }
-    var imageViewList : [CGPoint : UIImageView] = [:]
-    var boardSize : CGSize {
+    private var imageViewList : [CGPoint : UIImageView] = [:]
+    private var boardSize : CGSize {
         let viewSize = self.view.frame.size
         let size = CGSize(width: Int(viewSize.width/SABoardViewControllerGridElemetSize.width),
             height: Int(viewSize.height/SABoardViewControllerGridElemetSize.width))
@@ -47,8 +47,6 @@ extension CGPoint : Hashable {
             }
         })
         self.timer?.start()
-        
-        
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -63,11 +61,10 @@ extension SABoardViewController {
         for (col,row,oldState) in from {
             let newState = to[col,row]
             if let newState = newState where newState != oldState,
-                let imageView = self.imageViewList[CGPoint(x: col, y: row)] {
-                    setImageViewState(imageView, state: newState,animated: true)
+                let imageView = self.imageViewList[CGPoint(x: col, y: row)] as? SAGOLImageView {
+                    imageView.setImageViewState(newState,animated: true)
             }
         }
-
     }
     
     private func initBoard() {
@@ -76,52 +73,14 @@ extension SABoardViewController {
         
     }
     
-    private func topLeftPointForPos(column : Int, row : Int) -> CGPoint {
-        guard column >= 0 && row >= 0 else {
-            return CGPointZero
-        }
-        return CGPoint(x: Int(SABoardViewControllerGridElemetSize.width) * column, y: Int(SABoardViewControllerGridElemetSize.height) * row)
-    }
-    
-    private func imageViewForPosition(column colum : Int, row: Int) ->UIImageView {
-        let image = UIImage(named: "Orb")?.imageWithRenderingMode(.AlwaysTemplate)
-        let imageView = UIImageView(image: image)
-        imageView.frame = CGRect(origin: topLeftPointForPos(colum, row: row), size: SABoardViewControllerGridElemetSize)
-        imageView.hidden = true
-        imageView.alpha = 0.9
-        return imageView
-        
-    }
-    
-    private func setImageViewState(imageView: UIImageView, state : SAGOLBoardState, animated : Bool = false) {
-        let transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.01, 0.01)
-        let isAlive = state == .Alive
-        if animated
-        {
-            imageView.hidden = isAlive ? false : imageView.hidden
-            UIView.animateWithDuration(1.0, animations: { () -> Void in
-                imageView.transform = isAlive ? CGAffineTransformIdentity : transform
-                imageView.tintColor = isAlive ? UIColor .greenColor() : UIColor.grayColor()
-            }, completion: { _ in
-                imageView.hidden = isAlive ? imageView.hidden : true
-            })
-        }
-        else
-        {
-            imageView.tintColor = isAlive ? UIColor .greenColor() : UIColor.grayColor()
-            imageView.hidden = isAlive ? false : true
-            imageView.transform = isAlive ? CGAffineTransformIdentity : transform
-        }
-        
-    }
-    
     private func showBoard(animated : Bool = false) {
         for (col,row,state) in board {
-            let imageView = imageViewForPosition(column: col, row: row)
+            let  origin = CGPoint(x: Int(SABoardViewControllerGridElemetSize.width) * col, y: Int(SABoardViewControllerGridElemetSize.height) * row)
+            let frame = CGRect(origin: origin, size: SABoardViewControllerGridElemetSize)
+            let imageView = SAGOLImageView(frame: frame,state: state)
             self.imageViewList[CGPoint(x: col, y: row)] = imageView
             self.view .addSubview(imageView)
             imageView.hidden = state == .Alive ? false : true
-            setImageViewState(imageView, state: state)
         }
         
     }

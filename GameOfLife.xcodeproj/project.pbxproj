@@ -14,6 +14,7 @@
 		561A99121C5800F800673D0E /* SABoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A99101C5800F800673D0E /* SABoardViewController.swift */; };
 		561A99141C58014C00673D0E /* SAGOLBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A99131C58014C00673D0E /* SAGOLBoard.swift */; };
 		561A99161C5813B100673D0E /* SATimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A99151C5813B100673D0E /* SATimer.swift */; };
+		56939C0F1C593F32007C7793 /* SAGOLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56939C0E1C593F32007C7793 /* SAGOLImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		561A99131C58014C00673D0E /* SAGOLBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SAGOLBoard.swift; sourceTree = "<group>"; };
 		561A99151C5813B100673D0E /* SATimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SATimer.swift; sourceTree = "<group>"; };
 		561A99171C5831CF00673D0E /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		56939C0E1C593F32007C7793 /* SAGOLImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SAGOLImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 			children = (
 				561A990F1C5800F800673D0E /* SAAppDelegate.swift */,
 				561A99101C5800F800673D0E /* SABoardViewController.swift */,
+				56939C0E1C593F32007C7793 /* SAGOLImageView.swift */,
 				561A99131C58014C00673D0E /* SAGOLBoard.swift */,
 				561A99151C5813B100673D0E /* SATimer.swift */,
 			);
@@ -210,6 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				561A99121C5800F800673D0E /* SABoardViewController.swift in Sources */,
+				56939C0F1C593F32007C7793 /* SAGOLImageView.swift in Sources */,
 				561A99111C5800F800673D0E /* SAAppDelegate.swift in Sources */,
 				561A99141C58014C00673D0E /* SAGOLBoard.swift in Sources */,
 				561A99161C5813B100673D0E /* SATimer.swift in Sources */,
@@ -392,6 +396,7 @@
 				561A990A1C58007500673D0E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		561A990B1C58007500673D0E /* Build configuration list for PBXNativeTarget "GameOfLifeTests" */ = {
 			isa = XCConfigurationList;
@@ -400,6 +405,7 @@
 				561A990D1C58007500673D0E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

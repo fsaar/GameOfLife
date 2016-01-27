@@ -27,9 +27,9 @@ public enum SAGOLBoardState : Int {
 }
 
 public struct SAGOLBoardGenerator : GeneratorType {
-    let max : (Column:Int,Row:Int,State: SAGOLBoardState)
-    let board : SAGOLBoard
-    var current : (Column:Int,Row:Int,State: SAGOLBoardState) = (0,0,SAGOLBoardState.Dead)
+    private let max : (Column:Int,Row:Int,State: SAGOLBoardState)
+    private let board : SAGOLBoard
+    private var current : (Column:Int,Row:Int,State: SAGOLBoardState) = (0,0,SAGOLBoardState.Dead)
     init(board : SAGOLBoard,columns : Int, rows : Int) {
         self.max = (columns,rows,.Dead)
         self.current = (0,0,.Dead)
@@ -52,9 +52,9 @@ public struct SAGOLBoardGenerator : GeneratorType {
 
 
 public struct SAGOLBoard : CustomStringConvertible {
-    let rows : Int
-    let columns : Int
-    public var board : [[SAGOLBoardState]] = []
+    public let rows : Int
+    public let columns : Int
+    private var board : [[SAGOLBoardState]] = []
     init(rows: Int,columns : Int) {
         self.rows = rows
         self.columns = columns
@@ -75,7 +75,7 @@ public struct SAGOLBoard : CustomStringConvertible {
         
     }
     
-    subscript(column : Int,row : Int) -> SAGOLBoardState? {
+    public subscript(column : Int,row : Int) -> SAGOLBoardState? {
         get {
             guard ((column < self.columns) && (row < self.rows)) else {
                 return nil
@@ -104,7 +104,65 @@ public struct SAGOLBoard : CustomStringConvertible {
         return newBoard
     }
     
-    public func livingNeighbours(column : Int, row : Int) -> Int {
+    
+    public func processBoard() -> SAGOLBoard {
+        //1. Any live cell with fewer than two live neighbours dies, as if caused by under-population.
+        //2. Any live cell with two or three live neighbours lives on to the next generation.
+        //3. Any live cell with more than three live neighbours dies, as if by over-population.
+        //4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+        
+        var newBoard = SAGOLBoard(rows: self.rows, columns: self.columns)
+        for (col,row,state) in self {
+            let livingNeighbours = self.livingNeighbours(col, row: row)
+            if state == .Alive {
+                switch livingNeighbours {
+                case 0..<2: newBoard[col,row] = .Dead
+                    
+                case 2..<4: newBoard[col,row] = .Alive
+                    
+                case 4...8 : newBoard[col,row] = .Dead
+                default: break
+                }
+                
+            }
+            else if livingNeighbours == 3
+            {
+                newBoard[col,row] = .Alive
+            }
+        }
+        return newBoard
+    }
+
+}
+
+// MARK: SequenceType
+
+extension SAGOLBoard : SequenceType {
+    public func generate() -> SAGOLBoardGenerator {
+        return SAGOLBoardGenerator(board: self,columns: self.columns,rows: self.rows)
+    }
+}
+
+// MARK: Equatable
+
+extension SAGOLBoard : Equatable { }
+
+public func ==(lhs : SAGOLBoard,rhs : SAGOLBoard ) -> Bool {
+    let sameSize = (lhs.columns == rhs.columns) && (lhs.rows == rhs.rows)
+    var sameContent = true
+    if sameSize {
+        for (column,row,lhsState) in lhs where sameContent == true {
+            let rhsState = rhs[row,column] ?? .Dead
+            sameContent = lhsState == rhsState ? sameContent : false
+        }
+    }
+    let equal = sameSize && sameContent
+    return equal
+}
+
+// Mark: Helper
+extension SAGOLBoard {
+    private func livingNeighbours(column : Int, row : Int) -> Int {
         var neighbours = 0
         
         for i in 0..<8 {
@@ -139,59 +197,7 @@ public struct SAGOLBoard : CustomStringConvertible {
         }
         return neighbours;
     }
-    
-    public func processBoard() -> SAGOLBoard {
-        //1. Any live cell with fewer than two live neighbours dies, as if caused by under-population.
-        //2. Any live cell with two or three live neighbours lives on to the next generation.
-        //3. Any live cell with more than three live neighbours dies, as if by over-population.
-        //4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
-        
-        var newBoard = SAGOLBoard(rows: self.rows, columns: self.columns)
-        for (col,row,state) in self {
-            let livingNeighbours = self.livingNeighbours(col, row: row)
-            if state == .Alive {
-                switch livingNeighbours {
-                case 0..<2: newBoard[col,row] = .Dead
-                    
-                case 2..<4: newBoard[col,row] = .Alive
-                    
-                case 4...8 : newBoard[col,row] = .Dead
-                default: break
-                }
-                
-            }
-            else if livingNeighbours == 3
-            {
-                newBoard[col,row] = .Alive
-            }
-        }
-        return newBoard
-    }
 
-}
-
-
-extension SAGOLBoard : SequenceType {
-    public func generate() -> SAGOLBoardGenerator {
-        return SAGOLBoardGenerator(board: self,columns: self.columns,rows: self.rows)
-    }
-}
-
-// MARK: Equatable
-
-extension SAGOLBoard : Equatable { }
-
-public func ==(lhs : SAGOLBoard,rhs : SAGOLBoard ) -> Bool {
-    let sameSize = (lhs.columns == rhs.columns) && (lhs.rows == rhs.rows)
-    var sameContent = true
-    if sameSize {
-        for (column,row,lhsState) in lhs where sameContent == true {
-            let rhsState = rhs[row,column] ?? .Dead
-            sameContent = lhsState == rhsState ? sameContent : false
-        }
-    }
-    let equal = sameSize && sameContent
-    return equal
 }
 
 
