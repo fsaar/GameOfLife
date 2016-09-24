@@ -8,14 +8,6 @@
 
 import UIKit
 
-
-extension CGPoint : Hashable {
-    public var hashValue: Int {
-        return (self.x * GOLBoardViewController.gridElemetSize.height+self.y).hashValue
-    }
-
-}
-
 @objc class GOLBoardViewController: UIViewController {
     @IBOutlet weak var golView : GOLView!
     static let gridElemetSize = CGSize(width: 40.0,height: 40.0)

@@ -8,6 +8,13 @@
 
 import UIKit
 
+extension CGPoint : Hashable {
+    public var hashValue: Int {
+        return (self.x * GOLBoardViewController.gridElemetSize.height+self.y).hashValue
+    }
+    
+}
+
 class GOLView: UIView {
     var board : GOLBoard? = nil {
         willSet(newBoard) {
