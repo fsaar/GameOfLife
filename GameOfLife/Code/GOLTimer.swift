@@ -5,54 +5,54 @@
 //  Copyright © 2016 SAMedialabs. All rights reserved.
 //
 
-import UIKit;
+import UIKit
 
-let GOLTimerHandlerDefaultTimerTolerance: Float=1.0;
+let GOLTimerHandlerDefaultTimerTolerance: Float=1.0
 
-public typealias GOLTimerHandler = (_ timer : GOLTimer)->();
+public typealias GOLTimerHandler = (_ timer : GOLTimer)->()
 
 @objc final public class GOLTimer: NSObject {
-    fileprivate let timerInterval : TimeInterval;
+    fileprivate let timerInterval : TimeInterval
     var currentTimerInterval : TimeInterval {
-        return self.timerInterval;
+        return self.timerInterval
     }
-    fileprivate let timerHandler  : GOLTimerHandler?;
-    fileprivate var timer : Timer? = nil;
+    fileprivate let timerHandler  : GOLTimerHandler?
+    fileprivate var timer : Timer? = nil
     public var hasStarted : Bool  {
-        let enabled=self.timer == nil ? false : true;
-        return (enabled);
+        let enabled=self.timer == nil ? false : true
+        return (enabled)
     }
     
     public init?(timerInterVal: TimeInterval,timerHandler:@escaping GOLTimerHandler) {
-        self.timerInterval=TimeInterval(timerInterVal);
-        self.timerHandler=timerHandler;
-        super.init();
-        let isZeroOrNegative =  self.timerInterval <= TimeInterval(0);
+        self.timerInterval=TimeInterval(timerInterVal)
+        self.timerHandler=timerHandler
+        super.init()
+        let isZeroOrNegative =  self.timerInterval <= TimeInterval(0)
         if (isZeroOrNegative)
         {
-            return (nil);
+            return (nil)
         }
     }
         
     public func start()
     {
-        stop();
-        self.timer=Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(GOLTimer.timerHandler(_:)), userInfo: nil, repeats: true);
+        stop()
+        self.timer=Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(GOLTimer.timerHandler(_:)), userInfo: nil, repeats: true)
     }
     
     deinit
     {
-        stop();
+        stop()
     }
     
     public func stop()
     {
-        self.timer?.invalidate();
-        self.timer=nil;
+        self.timer?.invalidate()
+        self.timer=nil
     }
  
     func timerHandler(_ timer: Timer)
     {
-        timerHandler?(self);
+        timerHandler?(self)
     }
 }

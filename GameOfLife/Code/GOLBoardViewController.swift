@@ -19,14 +19,14 @@ extension CGPoint : Hashable {
 @objc class GOLBoardViewController: UIViewController {
     static let gridElemetSize = CGSize(width: 40.0,height: 40.0)
     fileprivate var timer : GOLTimer?
-    fileprivate var board : GOLBoard = .zero {
+    fileprivate var board : GOLBoard = .empty {
         willSet(newBoard) {
             if (board.size == newBoard.size) {
                 self.transitionBoard(from: board, to: newBoard)
             }
         }
     }
-    fileprivate var imageViewList : [CGPoint : UIImageView] = [:]
+    fileprivate var imageViewList : [CGPoint : GOLImageView] = [:]
     fileprivate var boardSize : CGSize {
         let viewSize = self.view.frame.size
         let size = CGSize(width: Int(viewSize.width/GOLBoardViewController.gridElemetSize.width),
@@ -61,7 +61,7 @@ extension GOLBoardViewController {
         for (col,row,oldState) in from {
             let newState = to[col,row]
             if let newState = newState , newState != oldState,
-                let imageView = self.imageViewList[CGPoint(x: col, y: row)] as? GOLImageView {
+                let imageView = self.imageViewList[CGPoint(x: col, y: row)]  {
                     imageView.setImageViewState(newState,animated: true)
             }
         }

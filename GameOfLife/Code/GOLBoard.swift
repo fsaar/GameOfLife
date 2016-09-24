@@ -52,7 +52,7 @@ public struct GOLBoardGenerator : IteratorProtocol {
 
 
 public struct GOLBoard : CustomStringConvertible,Equatable {
-    static let zero = GOLBoard(rows:0, columns:0)
+    static let empty = GOLBoard(rows:0, columns:0)
     public var size : CGSize {
             return CGSize(width:self.columns,height:self.rows)
     }
@@ -67,13 +67,8 @@ public struct GOLBoard : CustomStringConvertible,Equatable {
     
     public var description: String {
         var desc = ""
-        for row in 0..<self.rows {
-            var rowDesc = ""
-            for column in 0..<self.columns {
-                let state = (self[column,row] ?? .dead ).rawValue
-                rowDesc += "\(state)"+" "
-            }
-            desc += (rowDesc + "\n")
+        for (col,_,state) in self {
+            desc += col == self.columns-1 ? "\(state.rawValue)\n" :  "\(state.rawValue)"
         }
         return desc
         
@@ -196,7 +191,7 @@ extension GOLBoard {
                 break
             }
         }
-        return neighbours;
+        return neighbours
     }
 
 }
