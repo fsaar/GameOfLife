@@ -17,16 +17,14 @@ extension CGPoint : Hashable {
 }
 
 @objc class GOLBoardViewController: UIViewController {
+    @IBOutlet weak var golView : GOLView!
     static let gridElemetSize = CGSize(width: 40.0,height: 40.0)
     fileprivate var timer : GOLTimer?
     fileprivate var board : GOLBoard = .empty {
-        willSet(newBoard) {
-            if (board.size == newBoard.size) {
-                self.transitionBoard(from: board, to: newBoard)
-            }
+        didSet {
+            golView.board = board
         }
     }
-    fileprivate var imageViewList : [CGPoint : GOLImageView] = [:]
     fileprivate var boardSize : CGSize {
         let viewSize = self.view.frame.size
         let size = CGSize(width: Int(viewSize.width/GOLBoardViewController.gridElemetSize.width),
@@ -38,7 +36,6 @@ extension CGPoint : Hashable {
         super.viewDidLoad()
         
         initBoard()
-        showBoard()
         
         self.timer = GOLTimer(timerInterVal: 1.2, timerHandler: { [weak self] _ in
             guard let newBoard = self?.board.processBoard() else {
@@ -57,31 +54,10 @@ extension CGPoint : Hashable {
 // MARK: Helper
 extension GOLBoardViewController {
     
-    fileprivate func transitionBoard(from: GOLBoard, to: GOLBoard) {
-        for (col,row,oldState) in from {
-            let newState = to[col,row]
-            if let newState = newState , newState != oldState,
-                let imageView = self.imageViewList[CGPoint(x: col, y: row)]  {
-                    imageView.setImageViewState(newState,animated: true)
-            }
-        }
-    }
-    
     fileprivate func initBoard() {
         board = GOLBoard(rows: Int(boardSize.height), columns: Int(boardSize.width))
         board = board.populateBoard()
     }
     
-    fileprivate func showBoard(_ animated : Bool = false) {
-        for (col,row,state) in board {
-            let  origin = CGPoint(x: Int(GOLBoardViewController.gridElemetSize.width) * col, y: Int(GOLBoardViewController.gridElemetSize.height) * row)
-            let frame = CGRect(origin: origin, size: GOLBoardViewController.gridElemetSize)
-            let imageView = GOLImageView(frame: frame)
-            self.imageViewList[CGPoint(x: col, y: row)] = imageView
-            self.view.addSubview(imageView)
-            imageView.setImageViewState(state,animated: false)
-        }
-        
-    }
     
 }
