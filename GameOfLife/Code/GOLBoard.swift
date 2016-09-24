@@ -1,5 +1,5 @@
 //
-//  SAGOLBoard.swift
+//  GOLBoard.swift
 //  GameOfLife
 //
 //  Created by Frank Saar on 26/01/2016.

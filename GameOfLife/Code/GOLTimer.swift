@@ -1,6 +1,5 @@
 //
-//  SATimer.swift
-//  QUVoila
+//  GOLTimer.swift
 //
 //  Created by Frank Saar on 12/11/2014.
 //  Copyright © 2016 SAMedialabs. All rights reserved.
