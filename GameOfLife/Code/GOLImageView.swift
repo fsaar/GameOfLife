@@ -8,17 +8,18 @@
 import UIKit
 
 
-@objc public class GOLImageView : UIImageView {
-    public private(set) var state : GOLBoardState  = .Dead
-    
-     init(frame: CGRect, state : GOLBoardState) {
+@objc open class GOLImageView : UIImageView {
+    open fileprivate(set) var state : GOLBoardState  = .dead
+    let defaultTransform = CGAffineTransform.identity.scaledBy(x: 0.01, y: 0.01)
+
+     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.image = UIImage(named: "Orb")?.imageWithRenderingMode(.AlwaysTemplate)
+        self.image = UIImage(named: "Orb")?.withRenderingMode(.alwaysTemplate)
         self.alpha = 0.9
-        self.state = state
-        self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.01, 0.01)
-        self.tintColor   = UIColor.grayColor()
-        self.hidden = true
+        self.state = .dead
+        self.transform = self.defaultTransform
+        self.tintColor   = UIColor.gray
+        self.isHidden = true
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -26,24 +27,23 @@ import UIKit
     }
     
     
-    public func setImageViewState(state : GOLBoardState, animated : Bool = false) {
-        let transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.01, 0.01)
-        let isAlive = state == .Alive
+    open func setImageViewState(_ state : GOLBoardState, animated : Bool = false) {
+        let isAlive = state == .alive
         if animated
         {
-            self.hidden = isAlive ? false : self.hidden
-            UIView.animateWithDuration(1.0, animations: { () -> Void in
-                self.transform = isAlive ? CGAffineTransformIdentity : transform
-                self.tintColor = isAlive ? UIColor .greenColor() : UIColor.grayColor()
+            self.isHidden = isAlive ? false : self.isHidden
+            UIView.animate(withDuration: 1.0, animations: { () -> Void in
+                self.transform = isAlive ? CGAffineTransform.identity : self.defaultTransform
+                self.tintColor = isAlive ? UIColor.green : UIColor.gray
                 }, completion: { _ in
-                    self.hidden = isAlive ? self.hidden : true
+                    self.isHidden = isAlive ? self.isHidden : true
             })
         }
         else
         {
-            self.tintColor = isAlive ? UIColor .greenColor() : UIColor.grayColor()
-            self.hidden = isAlive ? false : true
-            self.transform = isAlive ? CGAffineTransformIdentity : transform
+            self.tintColor = isAlive ? UIColor.green : UIColor.gray
+            self.isHidden = isAlive ? false : true
+            self.transform = isAlive ? CGAffineTransform.identity : self.defaultTransform
         }
         
     }

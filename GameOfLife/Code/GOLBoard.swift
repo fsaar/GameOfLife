@@ -10,40 +10,40 @@ import Foundation
 
 
 public enum GOLNeighbourPosition : Int {
-    case TopLeft
-    case TopMiddle
-    case TopRight
-    case Left
-    case Right
-    case BottomLeft
-    case BottomMiddle
-    case BottomRight
+    case topLeft
+    case topMiddle
+    case topRight
+    case left
+    case right
+    case bottomLeft
+    case bottomMiddle
+    case bottomRight
 }
 
 
 public enum GOLBoardState : Int {
-    case Alive = 1
-    case Dead = 0
+    case alive = 1
+    case dead = 0
 }
 
-public struct GOLBoardGenerator : GeneratorType {
-    private let max : (Column:Int,Row:Int,State: GOLBoardState)
-    private let board : GOLBoard
-    private var current : (Column:Int,Row:Int,State: GOLBoardState) = (0,0,GOLBoardState.Dead)
+public struct GOLBoardGenerator : IteratorProtocol {
+    fileprivate let max : (Column:Int,Row:Int,State: GOLBoardState)
+    fileprivate let board : GOLBoard
+    fileprivate var current : (Column:Int,Row:Int,State: GOLBoardState) = (0,0,GOLBoardState.dead)
     init(board : GOLBoard,columns : Int, rows : Int) {
-        self.max = (columns,rows,.Dead)
-        self.current = (0,0,.Dead)
+        self.max = (columns,rows,.dead)
+        self.current = (0,0,.dead)
         self.board = board
     }
     public mutating func next() -> (Int,Int,GOLBoardState)? {
         if current.Row == self.max.Row {
             return nil
         }
-        let state = self.board[current.Column,current.Row] ?? .Dead
+        let state = self.board[current.Column,current.Row] ?? .dead
         let old = (current.Column,current.Row,state)
-        current.Column = current.Column.successor() % self.max.Column
+        current.Column = (current.Column + 1) % self.max.Column
         if current.Column == 0 {
-            current.Row = current.Row.successor()
+            current.Row = (current.Row + 1)
         }
         return old
     }
@@ -51,10 +51,11 @@ public struct GOLBoardGenerator : GeneratorType {
 }
 
 
-public struct GOLBoard : CustomStringConvertible {
+public struct GOLBoard : CustomStringConvertible,Equatable {
+    static let zero = GOLBoard(rows:0, columns:0)
     public let rows : Int
     public let columns : Int
-    private var board : [[GOLBoardState]] = []
+    fileprivate var board : [[GOLBoardState]] = []
     init(rows: Int,columns : Int) {
         self.rows = rows
         self.columns = columns
@@ -66,7 +67,7 @@ public struct GOLBoard : CustomStringConvertible {
         for row in 0..<self.rows {
             var rowDesc = ""
             for column in 0..<self.columns {
-                let state = (self[column,row] ?? .Dead ).rawValue
+                let state = (self[column,row] ?? .dead ).rawValue
                 rowDesc += "\(state)"+" "
             }
             desc += (rowDesc + "\n")
@@ -90,8 +91,8 @@ public struct GOLBoard : CustomStringConvertible {
         }
     }
     
-    private mutating func clearBoard() {
-        let row = (0..<self.columns).map{ _ in GOLBoardState.Dead }
+    fileprivate mutating func clearBoard() {
+        let row = (0..<self.columns).map{ _ in GOLBoardState.dead }
         let rows = (0..<self.rows).map{ _ in row }
         board = rows
     }
@@ -99,12 +100,25 @@ public struct GOLBoard : CustomStringConvertible {
     public func populateBoard() -> GOLBoard {
         var newBoard = GOLBoard(rows: self.rows, columns: self.columns)
         for (col,row,_) in self {
-            newBoard[col,row] = arc4random() % 2 == 0 ? .Dead : .Alive
+            newBoard[col,row] = arc4random() % 2 == 0 ? .dead : .alive
         }
         return newBoard
     }
     
+    public static func ==(lhs : GOLBoard,rhs : GOLBoard ) -> Bool {
+        let sameSize = (lhs.columns == rhs.columns) && (lhs.rows == rhs.rows)
+        var sameContent = true
+        if sameSize {
+            for (column,row,lhsState) in lhs where sameContent == true {
+                let rhsState = rhs[row,column] ?? .dead
+                sameContent = lhsState == rhsState ? sameContent : false
+            }
+        }
+        let equal = sameSize && sameContent
+        return equal
+    }
     
+
     public func processBoard() -> GOLBoard {
         //1. Any live cell with fewer than two live neighbours dies, as if caused by under-population.
         //2. Any live cell with two or three live neighbours lives on to the next generation.
@@ -114,20 +128,20 @@ public struct GOLBoard : CustomStringConvertible {
         var newBoard = GOLBoard(rows: self.rows, columns: self.columns)
         for (col,row,state) in self {
             let livingNeighbours = self.livingNeighbours(col, row: row)
-            if state == .Alive {
+            if state == .alive {
                 switch livingNeighbours {
-                case 0..<2: newBoard[col,row] = .Dead
+                case 0..<2: newBoard[col,row] = .dead
                     
-                case 2..<4: newBoard[col,row] = .Alive
+                case 2..<4: newBoard[col,row] = .alive
                     
-                case 4...8 : newBoard[col,row] = .Dead
+                case 4...8 : newBoard[col,row] = .dead
                 default: break
                 }
                 
             }
             else if livingNeighbours == 3
             {
-                newBoard[col,row] = .Alive
+                newBoard[col,row] = .alive
             }
         }
         return newBoard
@@ -137,59 +151,43 @@ public struct GOLBoard : CustomStringConvertible {
 
 // MARK: SequenceType
 
-extension GOLBoard : SequenceType {
-    public func generate() -> GOLBoardGenerator {
+extension GOLBoard : Sequence {
+    public func makeIterator() -> GOLBoardGenerator {
         return GOLBoardGenerator(board: self,columns: self.columns,rows: self.rows)
     }
 }
 
-// MARK: Equatable
-
-extension GOLBoard : Equatable { }
-
-public func ==(lhs : GOLBoard,rhs : GOLBoard ) -> Bool {
-    let sameSize = (lhs.columns == rhs.columns) && (lhs.rows == rhs.rows)
-    var sameContent = true
-    if sameSize {
-        for (column,row,lhsState) in lhs where sameContent == true {
-            let rhsState = rhs[row,column] ?? .Dead
-            sameContent = lhsState == rhsState ? sameContent : false
-        }
-    }
-    let equal = sameSize && sameContent
-    return equal
-}
 
 // Mark: Helper
 extension GOLBoard {
-    private func livingNeighbours(column : Int, row : Int) -> Int {
+    fileprivate func livingNeighbours(_ column : Int, row : Int) -> Int {
         var neighbours = 0
-        
-        for i in 0..<8 {
-            switch (GOLNeighbourPosition(rawValue: i),column,row) {
-            case (.Some(.TopLeft), 1..<self.columns, 1..<self.rows):
-                neighbours = self.board[row-1][column-1] == .Alive ? neighbours+1 : neighbours
+        let positions = (0..<8).flatMap { GOLNeighbourPosition(rawValue : $0) }
+        for pos in positions {
+            switch (pos,column,row) {
+            case (.topLeft, 1..<self.columns, 1..<self.rows):
+                neighbours = self.board[row-1][column-1] == .alive ? neighbours+1 : neighbours
                 
-            case (.Some(.TopMiddle), 0..<self.columns , 1..<self.rows):
-                neighbours = self.board[row-1][column] == .Alive ? neighbours+1 : neighbours
+            case (.topMiddle, 0..<self.columns , 1..<self.rows):
+                neighbours = self.board[row-1][column] == .alive ? neighbours+1 : neighbours
                 
-            case (.Some(.TopRight), 0..<self.columns-1 , 1..<self.rows):
-                neighbours = self.board[row-1][column+1] == .Alive ? neighbours+1 : neighbours
+            case (.topRight, 0..<self.columns-1 , 1..<self.rows):
+                neighbours = self.board[row-1][column+1] == .alive ? neighbours+1 : neighbours
                 
-            case (.Some(.Left), 1..<self.columns , _):
-                neighbours = self.board[row][column-1] == .Alive ? neighbours+1 : neighbours
+            case (.left, 1..<self.columns , _):
+                neighbours = self.board[row][column-1] == .alive ? neighbours+1 : neighbours
                 
-            case (.Some(.Right), 0..<self.columns-1 , _):
-                neighbours = self.board[row][column+1] == .Alive ? neighbours+1 : neighbours
+            case (.right, 0..<self.columns-1 , _):
+                neighbours = self.board[row][column+1] == .alive ? neighbours+1 : neighbours
                 
-            case (.Some(.BottomLeft), 1..<self.columns , 0..<self.rows-1):
-                neighbours = self.board[row+1][column-1] == .Alive ? neighbours+1 : neighbours
+            case (.bottomLeft, 1..<self.columns , 0..<self.rows-1):
+                neighbours = self.board[row+1][column-1] == .alive ? neighbours+1 : neighbours
                 
-            case (.Some(.BottomMiddle), 0..<self.columns , 0..<self.rows-1):
-                neighbours = self.board[row+1][column] == .Alive ? neighbours+1 : neighbours
+            case (.bottomMiddle, 0..<self.columns , 0..<self.rows-1):
+                neighbours = self.board[row+1][column] == .alive ? neighbours+1 : neighbours
                 
-            case (.Some(.BottomRight), 0..<self.columns-1 , 0..<self.rows-1):
-                neighbours = self.board[row+1][column+1] == .Alive ? neighbours+1 : neighbours
+            case (.bottomRight, 0..<self.columns-1 , 0..<self.rows-1):
+                neighbours = self.board[row+1][column+1] == .alive ? neighbours+1 : neighbours
                 
             default:
                 break

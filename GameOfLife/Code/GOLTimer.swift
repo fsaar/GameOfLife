@@ -10,25 +10,25 @@ import UIKit;
 
 let GOLTimerHandlerDefaultTimerTolerance: Float=1.0;
 
-public typealias GOLTimerHandler = (timer : GOLTimer)->();
+public typealias GOLTimerHandler = (_ timer : GOLTimer)->();
 
 @objc final public class GOLTimer: NSObject {
-    private let timerInterval : NSTimeInterval;
-    var currentTimerInterval : NSTimeInterval {
+    fileprivate let timerInterval : TimeInterval;
+    var currentTimerInterval : TimeInterval {
         return self.timerInterval;
     }
-    private let timerHandler  : GOLTimerHandler?;
-    private var timer : NSTimer? = nil;
+    fileprivate let timerHandler  : GOLTimerHandler?;
+    fileprivate var timer : Timer? = nil;
     public var hasStarted : Bool  {
         let enabled=self.timer == nil ? false : true;
         return (enabled);
     }
     
-    public init?(timerInterVal: NSTimeInterval,timerHandler:GOLTimerHandler) {
-        self.timerInterval=NSTimeInterval(timerInterVal);
+    public init?(timerInterVal: TimeInterval,timerHandler:@escaping GOLTimerHandler) {
+        self.timerInterval=TimeInterval(timerInterVal);
         self.timerHandler=timerHandler;
         super.init();
-        let isZeroOrNegative =  self.timerInterval <= NSTimeInterval(0);
+        let isZeroOrNegative =  self.timerInterval <= TimeInterval(0);
         if (isZeroOrNegative)
         {
             return (nil);
@@ -38,7 +38,7 @@ public typealias GOLTimerHandler = (timer : GOLTimer)->();
     public func start()
     {
         stop();
-        self.timer=NSTimer.scheduledTimerWithTimeInterval(timerInterval, target: self, selector: #selector(GOLTimer.timerHandler(_:)), userInfo: nil, repeats: true);
+        self.timer=Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(GOLTimer.timerHandler(_:)), userInfo: nil, repeats: true);
     }
     
     deinit
@@ -52,8 +52,8 @@ public typealias GOLTimerHandler = (timer : GOLTimer)->();
         self.timer=nil;
     }
  
-    func timerHandler(timer: NSTimer)
+    func timerHandler(_ timer: Timer)
     {
-        timerHandler?(timer: self);
+        timerHandler?(self);
     }
 }

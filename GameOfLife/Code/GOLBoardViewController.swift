@@ -18,16 +18,16 @@ extension CGPoint : Hashable {
 
 @objc class GOLBoardViewController: UIViewController {
     static let gridElemetSize = CGSize(width: 40.0,height: 40.0)
-    private var timer : GOLTimer?
-    private var board : GOLBoard = GOLBoard(rows: 0, columns: 0) {
+    fileprivate var timer : GOLTimer?
+    fileprivate var board : GOLBoard = .zero {
         willSet(newBoard) {
             if (board.columns == newBoard.columns && board.rows == newBoard.rows) {
                 self.transitionBoard(from: board, to: newBoard)
             }
         }
     }
-    private var imageViewList : [CGPoint : UIImageView] = [:]
-    private var boardSize : CGSize {
+    fileprivate var imageViewList : [CGPoint : UIImageView] = [:]
+    fileprivate var boardSize : CGSize {
         let viewSize = self.view.frame.size
         let size = CGSize(width: Int(viewSize.width/GOLBoardViewController.gridElemetSize.width),
             height: Int(viewSize.height/GOLBoardViewController.gridElemetSize.width))
@@ -41,15 +41,15 @@ extension CGPoint : Hashable {
         showBoard()
         
         self.timer = GOLTimer(timerInterVal: 1.2, timerHandler: { [weak self] _ in
-            let newBoard = self?.board.processBoard()
-            if let newBoard = newBoard  {
-                self?.board = newBoard
+            guard let newBoard = self?.board.processBoard() else {
+                return
             }
+            self?.board = newBoard
         })
         self.timer?.start()
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 }
@@ -57,30 +57,29 @@ extension CGPoint : Hashable {
 // MARK: Helper
 extension GOLBoardViewController {
     
-    private func transitionBoard(from from: GOLBoard, to: GOLBoard) {
+    fileprivate func transitionBoard(from: GOLBoard, to: GOLBoard) {
         for (col,row,oldState) in from {
             let newState = to[col,row]
-            if let newState = newState where newState != oldState,
+            if let newState = newState , newState != oldState,
                 let imageView = self.imageViewList[CGPoint(x: col, y: row)] as? GOLImageView {
                     imageView.setImageViewState(newState,animated: true)
             }
         }
     }
     
-    private func initBoard() {
+    fileprivate func initBoard() {
         board = GOLBoard(rows: Int(boardSize.height), columns: Int(boardSize.width))
         board = board.populateBoard()
-        
     }
     
-    private func showBoard(animated : Bool = false) {
+    fileprivate func showBoard(_ animated : Bool = false) {
         for (col,row,state) in board {
             let  origin = CGPoint(x: Int(GOLBoardViewController.gridElemetSize.width) * col, y: Int(GOLBoardViewController.gridElemetSize.height) * row)
             let frame = CGRect(origin: origin, size: GOLBoardViewController.gridElemetSize)
-            let imageView = GOLImageView(frame: frame,state: state)
+            let imageView = GOLImageView(frame: frame)
             self.imageViewList[CGPoint(x: col, y: row)] = imageView
-            self.view .addSubview(imageView)
-            imageView.hidden = state == .Alive ? false : true
+            self.view.addSubview(imageView)
+            imageView.setImageViewState(state,animated: false)
         }
         
     }
