@@ -9,7 +9,7 @@
 import Foundation
 
 
-public enum SAGOLNeighbourPosition : Int {
+public enum GOLNeighbourPosition : Int {
     case TopLeft
     case TopMiddle
     case TopRight
@@ -21,21 +21,21 @@ public enum SAGOLNeighbourPosition : Int {
 }
 
 
-public enum SAGOLBoardState : Int {
+public enum GOLBoardState : Int {
     case Alive = 1
     case Dead = 0
 }
 
-public struct SAGOLBoardGenerator : GeneratorType {
-    private let max : (Column:Int,Row:Int,State: SAGOLBoardState)
-    private let board : SAGOLBoard
-    private var current : (Column:Int,Row:Int,State: SAGOLBoardState) = (0,0,SAGOLBoardState.Dead)
-    init(board : SAGOLBoard,columns : Int, rows : Int) {
+public struct GOLBoardGenerator : GeneratorType {
+    private let max : (Column:Int,Row:Int,State: GOLBoardState)
+    private let board : GOLBoard
+    private var current : (Column:Int,Row:Int,State: GOLBoardState) = (0,0,GOLBoardState.Dead)
+    init(board : GOLBoard,columns : Int, rows : Int) {
         self.max = (columns,rows,.Dead)
         self.current = (0,0,.Dead)
         self.board = board
     }
-    public mutating func next() -> (Int,Int,SAGOLBoardState)? {
+    public mutating func next() -> (Int,Int,GOLBoardState)? {
         if current.Row == self.max.Row {
             return nil
         }
@@ -51,10 +51,10 @@ public struct SAGOLBoardGenerator : GeneratorType {
 }
 
 
-public struct SAGOLBoard : CustomStringConvertible {
+public struct GOLBoard : CustomStringConvertible {
     public let rows : Int
     public let columns : Int
-    private var board : [[SAGOLBoardState]] = []
+    private var board : [[GOLBoardState]] = []
     init(rows: Int,columns : Int) {
         self.rows = rows
         self.columns = columns
@@ -75,7 +75,7 @@ public struct SAGOLBoard : CustomStringConvertible {
         
     }
     
-    public subscript(column : Int,row : Int) -> SAGOLBoardState? {
+    public subscript(column : Int,row : Int) -> GOLBoardState? {
         get {
             guard ((column < self.columns) && (row < self.rows)) else {
                 return nil
@@ -91,13 +91,13 @@ public struct SAGOLBoard : CustomStringConvertible {
     }
     
     private mutating func clearBoard() {
-        let row = (0..<self.columns).map{ _ in SAGOLBoardState.Dead }
+        let row = (0..<self.columns).map{ _ in GOLBoardState.Dead }
         let rows = (0..<self.rows).map{ _ in row }
         board = rows
     }
     
-    public func populateBoard() -> SAGOLBoard {
-        var newBoard = SAGOLBoard(rows: self.rows, columns: self.columns)
+    public func populateBoard() -> GOLBoard {
+        var newBoard = GOLBoard(rows: self.rows, columns: self.columns)
         for (col,row,_) in self {
             newBoard[col,row] = arc4random() % 2 == 0 ? .Dead : .Alive
         }
@@ -105,13 +105,13 @@ public struct SAGOLBoard : CustomStringConvertible {
     }
     
     
-    public func processBoard() -> SAGOLBoard {
+    public func processBoard() -> GOLBoard {
         //1. Any live cell with fewer than two live neighbours dies, as if caused by under-population.
         //2. Any live cell with two or three live neighbours lives on to the next generation.
         //3. Any live cell with more than three live neighbours dies, as if by over-population.
         //4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
         
-        var newBoard = SAGOLBoard(rows: self.rows, columns: self.columns)
+        var newBoard = GOLBoard(rows: self.rows, columns: self.columns)
         for (col,row,state) in self {
             let livingNeighbours = self.livingNeighbours(col, row: row)
             if state == .Alive {
@@ -137,17 +137,17 @@ public struct SAGOLBoard : CustomStringConvertible {
 
 // MARK: SequenceType
 
-extension SAGOLBoard : SequenceType {
-    public func generate() -> SAGOLBoardGenerator {
-        return SAGOLBoardGenerator(board: self,columns: self.columns,rows: self.rows)
+extension GOLBoard : SequenceType {
+    public func generate() -> GOLBoardGenerator {
+        return GOLBoardGenerator(board: self,columns: self.columns,rows: self.rows)
     }
 }
 
 // MARK: Equatable
 
-extension SAGOLBoard : Equatable { }
+extension GOLBoard : Equatable { }
 
-public func ==(lhs : SAGOLBoard,rhs : SAGOLBoard ) -> Bool {
+public func ==(lhs : GOLBoard,rhs : GOLBoard ) -> Bool {
     let sameSize = (lhs.columns == rhs.columns) && (lhs.rows == rhs.rows)
     var sameContent = true
     if sameSize {
@@ -161,12 +161,12 @@ public func ==(lhs : SAGOLBoard,rhs : SAGOLBoard ) -> Bool {
 }
 
 // Mark: Helper
-extension SAGOLBoard {
+extension GOLBoard {
     private func livingNeighbours(column : Int, row : Int) -> Int {
         var neighbours = 0
         
         for i in 0..<8 {
-            switch (SAGOLNeighbourPosition(rawValue: i),column,row) {
+            switch (GOLNeighbourPosition(rawValue: i),column,row) {
             case (.Some(.TopLeft), 1..<self.columns, 1..<self.rows):
                 neighbours = self.board[row-1][column-1] == .Alive ? neighbours+1 : neighbours
                 

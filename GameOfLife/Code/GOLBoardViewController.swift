@@ -8,18 +8,18 @@
 
 import UIKit
 
-private let SABoardViewControllerGridElemetSize = CGSize(width: 40.0,height: 40.0)
 
 extension CGPoint : Hashable {
     public var hashValue: Int {
-        return (self.x * SABoardViewControllerGridElemetSize.height+self.y).hashValue
+        return (self.x * GOLBoardViewController.gridElemetSize.height+self.y).hashValue
     }
 
 }
 
-@objc class SABoardViewController: UIViewController {
-    private var timer : SATimer?
-    private var board : SAGOLBoard = SAGOLBoard(rows: 0, columns: 0) {
+@objc class GOLBoardViewController: UIViewController {
+    static let gridElemetSize = CGSize(width: 40.0,height: 40.0)
+    private var timer : GOLTimer?
+    private var board : GOLBoard = GOLBoard(rows: 0, columns: 0) {
         willSet(newBoard) {
             if (board.columns == newBoard.columns && board.rows == newBoard.rows) {
                 self.transitionBoard(from: board, to: newBoard)
@@ -29,8 +29,8 @@ extension CGPoint : Hashable {
     private var imageViewList : [CGPoint : UIImageView] = [:]
     private var boardSize : CGSize {
         let viewSize = self.view.frame.size
-        let size = CGSize(width: Int(viewSize.width/SABoardViewControllerGridElemetSize.width),
-            height: Int(viewSize.height/SABoardViewControllerGridElemetSize.width))
+        let size = CGSize(width: Int(viewSize.width/GOLBoardViewController.gridElemetSize.width),
+            height: Int(viewSize.height/GOLBoardViewController.gridElemetSize.width))
         return size
     }
     
@@ -40,7 +40,7 @@ extension CGPoint : Hashable {
         initBoard()
         showBoard()
         
-        self.timer = SATimer(timerInterVal: 1.2, timerHandler: { [weak self] _ in
+        self.timer = GOLTimer(timerInterVal: 1.2, timerHandler: { [weak self] _ in
             let newBoard = self?.board.processBoard()
             if let newBoard = newBoard  {
                 self?.board = newBoard
@@ -55,29 +55,29 @@ extension CGPoint : Hashable {
 }
 
 // MARK: Helper
-extension SABoardViewController {
+extension GOLBoardViewController {
     
-    private func transitionBoard(from from: SAGOLBoard, to: SAGOLBoard) {
+    private func transitionBoard(from from: GOLBoard, to: GOLBoard) {
         for (col,row,oldState) in from {
             let newState = to[col,row]
             if let newState = newState where newState != oldState,
-                let imageView = self.imageViewList[CGPoint(x: col, y: row)] as? SAGOLImageView {
+                let imageView = self.imageViewList[CGPoint(x: col, y: row)] as? GOLImageView {
                     imageView.setImageViewState(newState,animated: true)
             }
         }
     }
     
     private func initBoard() {
-        board = SAGOLBoard(rows: Int(boardSize.height), columns: Int(boardSize.width))
+        board = GOLBoard(rows: Int(boardSize.height), columns: Int(boardSize.width))
         board = board.populateBoard()
         
     }
     
     private func showBoard(animated : Bool = false) {
         for (col,row,state) in board {
-            let  origin = CGPoint(x: Int(SABoardViewControllerGridElemetSize.width) * col, y: Int(SABoardViewControllerGridElemetSize.height) * row)
-            let frame = CGRect(origin: origin, size: SABoardViewControllerGridElemetSize)
-            let imageView = SAGOLImageView(frame: frame,state: state)
+            let  origin = CGPoint(x: Int(GOLBoardViewController.gridElemetSize.width) * col, y: Int(GOLBoardViewController.gridElemetSize.height) * row)
+            let frame = CGRect(origin: origin, size: GOLBoardViewController.gridElemetSize)
+            let imageView = GOLImageView(frame: frame,state: state)
             self.imageViewList[CGPoint(x: col, y: row)] = imageView
             self.view .addSubview(imageView)
             imageView.hidden = state == .Alive ? false : true

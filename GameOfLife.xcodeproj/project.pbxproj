@@ -10,11 +10,11 @@
 		561A98F41C58007500673D0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 561A98F21C58007500673D0E /* Main.storyboard */; };
 		561A98F61C58007500673D0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 561A98F51C58007500673D0E /* Assets.xcassets */; };
 		561A99041C58007500673D0E /* GameOfLifeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A99031C58007500673D0E /* GameOfLifeTests.swift */; };
-		561A99111C5800F800673D0E /* SAAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A990F1C5800F800673D0E /* SAAppDelegate.swift */; };
-		561A99121C5800F800673D0E /* SABoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A99101C5800F800673D0E /* SABoardViewController.swift */; };
-		561A99141C58014C00673D0E /* SAGOLBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A99131C58014C00673D0E /* SAGOLBoard.swift */; };
-		561A99161C5813B100673D0E /* SATimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A99151C5813B100673D0E /* SATimer.swift */; };
-		56939C0F1C593F32007C7793 /* SAGOLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56939C0E1C593F32007C7793 /* SAGOLImageView.swift */; };
+		561A99111C5800F800673D0E /* GOLAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A990F1C5800F800673D0E /* GOLAppDelegate.swift */; };
+		561A99121C5800F800673D0E /* GOLBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A99101C5800F800673D0E /* GOLBoardViewController.swift */; };
+		561A99141C58014C00673D0E /* GOLBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A99131C58014C00673D0E /* GOLBoard.swift */; };
+		561A99161C5813B100673D0E /* GOLTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A99151C5813B100673D0E /* GOLTimer.swift */; };
+		56939C0F1C593F32007C7793 /* GOLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56939C0E1C593F32007C7793 /* GOLImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,12 +35,12 @@
 		561A98FF1C58007500673D0E /* GameOfLifeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameOfLifeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		561A99031C58007500673D0E /* GameOfLifeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOfLifeTests.swift; sourceTree = "<group>"; };
 		561A99051C58007500673D0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		561A990F1C5800F800673D0E /* SAAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SAAppDelegate.swift; sourceTree = "<group>"; };
-		561A99101C5800F800673D0E /* SABoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SABoardViewController.swift; sourceTree = "<group>"; };
-		561A99131C58014C00673D0E /* SAGOLBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SAGOLBoard.swift; sourceTree = "<group>"; };
-		561A99151C5813B100673D0E /* SATimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SATimer.swift; sourceTree = "<group>"; };
+		561A990F1C5800F800673D0E /* GOLAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLAppDelegate.swift; sourceTree = "<group>"; };
+		561A99101C5800F800673D0E /* GOLBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLBoardViewController.swift; sourceTree = "<group>"; };
+		561A99131C58014C00673D0E /* GOLBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLBoard.swift; sourceTree = "<group>"; };
+		561A99151C5813B100673D0E /* GOLTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLTimer.swift; sourceTree = "<group>"; };
 		561A99171C5831CF00673D0E /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
-		56939C0E1C593F32007C7793 /* SAGOLImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SAGOLImageView.swift; sourceTree = "<group>"; };
+		56939C0E1C593F32007C7793 /* GOLImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,11 +103,11 @@
 		561A990E1C5800F800673D0E /* Code */ = {
 			isa = PBXGroup;
 			children = (
-				561A990F1C5800F800673D0E /* SAAppDelegate.swift */,
-				561A99101C5800F800673D0E /* SABoardViewController.swift */,
-				56939C0E1C593F32007C7793 /* SAGOLImageView.swift */,
-				561A99131C58014C00673D0E /* SAGOLBoard.swift */,
-				561A99151C5813B100673D0E /* SATimer.swift */,
+				561A990F1C5800F800673D0E /* GOLAppDelegate.swift */,
+				561A99101C5800F800673D0E /* GOLBoardViewController.swift */,
+				56939C0E1C593F32007C7793 /* GOLImageView.swift */,
+				561A99131C58014C00673D0E /* GOLBoard.swift */,
+				561A99151C5813B100673D0E /* GOLTimer.swift */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -212,11 +212,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				561A99121C5800F800673D0E /* SABoardViewController.swift in Sources */,
-				56939C0F1C593F32007C7793 /* SAGOLImageView.swift in Sources */,
-				561A99111C5800F800673D0E /* SAAppDelegate.swift in Sources */,
-				561A99141C58014C00673D0E /* SAGOLBoard.swift in Sources */,
-				561A99161C5813B100673D0E /* SATimer.swift in Sources */,
+				561A99121C5800F800673D0E /* GOLBoardViewController.swift in Sources */,
+				56939C0F1C593F32007C7793 /* GOLImageView.swift in Sources */,
+				561A99111C5800F800673D0E /* GOLAppDelegate.swift in Sources */,
+				561A99141C58014C00673D0E /* GOLBoard.swift in Sources */,
+				561A99161C5813B100673D0E /* GOLTimer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

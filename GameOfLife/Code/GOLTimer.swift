@@ -8,29 +8,28 @@
 
 import UIKit;
 
-let SATimerHandlerDefaultTimerTolerance: Float=1.0;
+let GOLTimerHandlerDefaultTimerTolerance: Float=1.0;
 
-public typealias SATimerHandler = (timer : SATimer)->();
+public typealias GOLTimerHandler = (timer : GOLTimer)->();
 
-@objc final public class SATimer: NSObject {
+@objc final public class GOLTimer: NSObject {
     private let timerInterval : NSTimeInterval;
     var currentTimerInterval : NSTimeInterval {
         return self.timerInterval;
     }
-    private let timerHandler  : SATimerHandler?;
+    private let timerHandler  : GOLTimerHandler?;
     private var timer : NSTimer? = nil;
     public var hasStarted : Bool  {
         let enabled=self.timer == nil ? false : true;
         return (enabled);
     }
     
-    public init?(timerInterVal: NSTimeInterval,timerHandler:SATimerHandler?) {
+    public init?(timerInterVal: NSTimeInterval,timerHandler:GOLTimerHandler) {
         self.timerInterval=NSTimeInterval(timerInterVal);
         self.timerHandler=timerHandler;
         super.init();
         let isZeroOrNegative =  self.timerInterval <= NSTimeInterval(0);
-        let hasNilHandler = timerHandler == nil;
-        if (isZeroOrNegative || hasNilHandler)
+        if (isZeroOrNegative)
         {
             return (nil);
         }
@@ -39,7 +38,7 @@ public typealias SATimerHandler = (timer : SATimer)->();
     public func start()
     {
         stop();
-        self.timer=NSTimer.scheduledTimerWithTimeInterval(timerInterval, target: self, selector: Selector("timerHandler:"), userInfo: nil, repeats: true);
+        self.timer=NSTimer.scheduledTimerWithTimeInterval(timerInterval, target: self, selector: #selector(GOLTimer.timerHandler(_:)), userInfo: nil, repeats: true);
     }
     
     deinit

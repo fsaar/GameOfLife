@@ -1,5 +1,4 @@
 //
-//  SAGOLImageView.swift
 //  GameOfLife
 //
 //  Created by Frank Saar on 27/01/2016.
@@ -9,10 +8,10 @@
 import UIKit
 
 
-@objc public class SAGOLImageView : UIImageView {
-    public private(set) var state : SAGOLBoardState  = .Dead
+@objc public class GOLImageView : UIImageView {
+    public private(set) var state : GOLBoardState  = .Dead
     
-     init(frame: CGRect, state : SAGOLBoardState) {
+     init(frame: CGRect, state : GOLBoardState) {
         super.init(frame: frame)
         self.image = UIImage(named: "Orb")?.imageWithRenderingMode(.AlwaysTemplate)
         self.alpha = 0.9
@@ -27,7 +26,7 @@ import UIKit
     }
     
     
-    public func setImageViewState(state : SAGOLBoardState, animated : Bool = false) {
+    public func setImageViewState(state : GOLBoardState, animated : Bool = false) {
         let transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.01, 0.01)
         let isAlive = state == .Alive
         if animated

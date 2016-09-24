@@ -251,20 +251,4 @@ class GeneratorTestSequence : SequenceType {
 }
 
 
-let g = GeneratorTestSequence().generate()
-
-print(g.next())
-print(g.next())
-print(g.next())
-
-var ll : String = ""
-for i in GeneratorTestSequence() {
-    ll += "\(i)"
-}
-print(ll)
-let k = arc4random()%2
-
-
-
-
 
