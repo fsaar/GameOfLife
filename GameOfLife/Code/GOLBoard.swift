@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import CoreGraphics
 
 public enum GOLNeighbourPosition : Int {
     case topLeft
@@ -53,6 +53,9 @@ public struct GOLBoardGenerator : IteratorProtocol {
 
 public struct GOLBoard : CustomStringConvertible,Equatable {
     static let zero = GOLBoard(rows:0, columns:0)
+    public var size : CGSize {
+            return CGSize(width:self.columns,height:self.rows)
+    }
     public let rows : Int
     public let columns : Int
     fileprivate var board : [[GOLBoardState]] = []
@@ -106,7 +109,7 @@ public struct GOLBoard : CustomStringConvertible,Equatable {
     }
     
     public static func ==(lhs : GOLBoard,rhs : GOLBoard ) -> Bool {
-        let sameSize = (lhs.columns == rhs.columns) && (lhs.rows == rhs.rows)
+        let sameSize = (lhs.size == rhs.size)
         var sameContent = true
         if sameSize {
             for (column,row,lhsState) in lhs where sameContent == true {

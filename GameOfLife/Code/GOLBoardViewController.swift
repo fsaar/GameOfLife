@@ -21,7 +21,7 @@ extension CGPoint : Hashable {
     fileprivate var timer : GOLTimer?
     fileprivate var board : GOLBoard = .zero {
         willSet(newBoard) {
-            if (board.columns == newBoard.columns && board.rows == newBoard.rows) {
+            if (board.size == newBoard.size) {
                 self.transitionBoard(from: board, to: newBoard)
             }
         }
