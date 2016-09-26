@@ -10,8 +10,11 @@ import UIKit
 
 @objc class GOLBoardViewController: UIViewController {
     @IBOutlet weak var golView : GOLView!
+    fileprivate var iterations : Int = 0
     static let gridElemetSize = CGSize(width: 40.0,height: 40.0)
     fileprivate var timer : GOLTimer?
+    static let animationInterval : TimeInterval = 1.0
+    static let timerInterval = animationInterval*1.2
     fileprivate var board : GOLBoard = .empty {
         didSet {
             golView.board = board
@@ -26,14 +29,22 @@ import UIKit
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.golView.animationInterval = GOLBoardViewController.animationInterval
         initBoard()
-        
-        self.timer = GOLTimer(timerInterVal: 1.2, timerHandler: { [weak self] _ in
+
+        self.timer = GOLTimer(timerInterVal: GOLBoardViewController.timerInterval, timerHandler: { [weak self] timer in
             guard let newBoard = self?.board.processBoard() else {
                 return
             }
-            self?.board = newBoard
+            if let oldBoard = self?.board, newBoard != oldBoard {
+                self?.iterations += 1
+                self?.board = newBoard
+            }
+            else
+            {
+                timer.stop()
+                self?.showDialog()
+            }
         })
         self.timer?.start()
     }
@@ -47,8 +58,20 @@ import UIKit
 extension GOLBoardViewController {
     
     fileprivate func initBoard() {
+        iterations = 0
         board = GOLBoard(rows: Int(boardSize.height), columns: Int(boardSize.width))
         board = board.populateBoard()
+    }
+    
+    fileprivate func showDialog() {
+        let sheet = UIAlertController(title: "Game Over after \(iterations) rounds", message: "Press 'Restart' to restart", preferredStyle: .alert)
+        let restartAction = UIAlertAction.init(title: "Restart", style: .default) { [weak self] _ in
+            self?.initBoard()
+            self?.timer?.start()
+        }
+        sheet.addAction(restartAction)
+        self.present(sheet, animated: true, completion: nil)
+
     }
     
     

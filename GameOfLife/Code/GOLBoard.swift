@@ -104,16 +104,9 @@ public struct GOLBoard : CustomStringConvertible,Equatable {
     }
     
     public static func ==(lhs : GOLBoard,rhs : GOLBoard ) -> Bool {
-        let sameSize = (lhs.size == rhs.size)
-        var sameContent = true
-        if sameSize {
-            for (column,row,lhsState) in lhs where sameContent == true {
-                let rhsState = rhs[row,column] ?? .dead
-                sameContent = lhsState == rhsState ? sameContent : false
-            }
-        }
-        let equal = sameSize && sameContent
-        return equal
+        let lhsString = lhs.map { _,_,state in "\(state.rawValue)" }.joined(separator: "")
+        let rhsString = rhs.map { _,_,state in "\(state.rawValue)" }.joined(separator: "")
+        return lhsString == rhsString
     }
     
 

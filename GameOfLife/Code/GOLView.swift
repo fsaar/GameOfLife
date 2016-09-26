@@ -16,6 +16,8 @@ extension CGPoint : Hashable {
 }
 
 class GOLView: UIView {
+    var animationInterval : TimeInterval = 1
+
     var board : GOLBoard? = nil {
         willSet(newBoard) {
             if let board = board, let  newBoard = newBoard , board.size == newBoard.size {
@@ -37,7 +39,7 @@ class GOLView: UIView {
             let newState = to[col,row]
             if let newState = newState , newState != oldState,
                 let imageView = self.imageViewList[CGPoint(x: col, y: row)]  {
-                imageView.setImageViewState(newState,animated: true)
+                imageView.setImageViewState(newState,animated: true,withAnimationInterval: self.animationInterval)
             }
         }
     }
