@@ -8,7 +8,7 @@
 import UIKit
 
 
-@objc open class GOLImageView : UIImageView {
+@objc internal class GOLImageView : UIImageView {
     open fileprivate(set) var state : GOLBoardState  = .dead
     let defaultTransform = CGAffineTransform.identity.scaledBy(x: 0.01, y: 0.01)
     static let animationInterval : TimeInterval = 1
@@ -27,7 +27,7 @@ import UIKit
     }
     
     
-    open func setImageViewState(_ state : GOLBoardState, animated : Bool = false, withAnimationInterval animationInterval : TimeInterval = animationInterval) {
+    internal func setImageViewState(_ state : GOLBoardState, animated : Bool = false, withAnimationInterval animationInterval : TimeInterval = GOLImageView.animationInterval) {
         let isAlive = state == .alive
         if animated
         {

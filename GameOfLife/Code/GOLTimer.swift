@@ -51,7 +51,7 @@ public typealias GOLTimerHandler = (_ timer : GOLTimer)->()
         self.timer=nil
     }
  
-    func timerHandler(_ timer: Timer)
+    @objc func timerHandler(_ timer: Timer)
     {
         timerHandler?(self)
     }

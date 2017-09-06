@@ -12,7 +12,23 @@ import UIKit
     @IBOutlet weak var golView : GOLView!
     fileprivate var iterations : Int = 0
     static let gridElemetSize = CGSize(width: 40.0,height: 40.0)
-    fileprivate var timer : GOLTimer?
+    fileprivate lazy var timer : GOLTimer? = {
+        let timer = GOLTimer(timerInterVal: GOLBoardViewController.timerInterval, timerHandler: { [weak self] timer in
+            guard let newBoard = self?.board.processBoard() else {
+                return
+            }
+            if let oldBoard = self?.board, newBoard != oldBoard {
+                self?.iterations += 1
+                self?.board = newBoard
+            }
+            else
+            {
+                timer.stop()
+                self?.showDialog()
+            }
+        })
+        return timer
+    }()
     static let animationInterval : TimeInterval = 1.0
     static let timerInterval = animationInterval*1.2
     fileprivate var board : GOLBoard = .empty {
@@ -31,22 +47,7 @@ import UIKit
         super.viewDidLoad()
         self.golView.animationInterval = GOLBoardViewController.animationInterval
         initBoard()
-
-        self.timer = GOLTimer(timerInterVal: GOLBoardViewController.timerInterval, timerHandler: { [weak self] timer in
-            guard let newBoard = self?.board.processBoard() else {
-                return
-            }
-            if let oldBoard = self?.board, newBoard != oldBoard {
-                self?.iterations += 1
-                self?.board = newBoard
-            }
-            else
-            {
-                timer.stop()
-                self?.showDialog()
-            }
-        })
-        self.timer?.start()
+        timer?.start()
     }
     
     override var prefersStatusBarHidden : Bool {
