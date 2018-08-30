@@ -28,16 +28,22 @@ public typealias GOLTimerHandler = (_ timer : GOLTimer)->()
         self.timerHandler=timerHandler
         super.init()
         let isZeroOrNegative =  self.timerInterval <= TimeInterval(0)
-        if (isZeroOrNegative)
+        if isZeroOrNegative
         {
-            return (nil)
+            return nil
         }
     }
         
     public func start()
     {
         stop()
-        self.timer=Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(GOLTimer.timerHandler(_:)), userInfo: nil, repeats: true)
+        self.timer = Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: true) { [weak self] _ in
+            guard let strongSelf = self else {
+                return
+            }
+            self?.timerHandler?(strongSelf)
+        }
+        
     }
     
     deinit
@@ -48,11 +54,6 @@ public typealias GOLTimerHandler = (_ timer : GOLTimer)->()
     public func stop()
     {
         self.timer?.invalidate()
-        self.timer=nil
-    }
- 
-    @objc func timerHandler(_ timer: Timer)
-    {
-        timerHandler?(self)
+        self.timer = nil
     }
 }

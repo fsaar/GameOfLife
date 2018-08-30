@@ -13,7 +13,7 @@ import UIKit
     fileprivate var iterations : Int = 0
     static let gridElemetSize = CGSize(width: 40.0,height: 40.0)
     fileprivate lazy var timer : GOLTimer? = {
-        let timer = GOLTimer(timerInterVal: GOLBoardViewController.timerInterval, timerHandler: { [weak self] timer in
+        let timer = GOLTimer(timerInterVal: GOLBoardViewController.timerInterval) { [weak self] timer in
             guard let newBoard = self?.board.processBoard() else {
                 return
             }
@@ -26,9 +26,10 @@ import UIKit
                 timer.stop()
                 self?.showDialog()
             }
-        })
+        }
         return timer
     }()
+    
     static let animationInterval : TimeInterval = 1.0
     static let timerInterval = animationInterval*1.2
     fileprivate var board : GOLBoard = .empty {

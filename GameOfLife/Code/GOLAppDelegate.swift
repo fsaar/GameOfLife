@@ -14,4 +14,3 @@ class SAAppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 }
-
