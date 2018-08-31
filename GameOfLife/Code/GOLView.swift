@@ -9,10 +9,12 @@
 import UIKit
 
 extension CGPoint : Hashable {
-    public var hashValue: Int {
-        return (self.x * GOLBoardViewController.gridElemetSize.height+self.y).hashValue
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(x)
+        hasher.combine(y)
+
     }
-    
 }
 
 class GOLView: UIView {
@@ -25,10 +27,8 @@ class GOLView: UIView {
             }
         }
         didSet(oldValue) {
-            if case .none = oldValue {
-                if let _ = board {
-                    showBoard()
-                }
+            if case .none = oldValue,let _ = board {
+                showBoard()
             }
         }
     }
@@ -48,6 +48,7 @@ class GOLView: UIView {
         guard let board = board else {
             return
         }
+        
         for (col,row,state) in board {
             let  origin = CGPoint(x: Int(GOLBoardViewController.gridElemetSize.width) * col, y: Int(GOLBoardViewController.gridElemetSize.height) * row)
             let frame = CGRect(origin: origin, size: GOLBoardViewController.gridElemetSize)

@@ -27,23 +27,24 @@ public enum GOLBoardState : Int {
 }
 
 public struct GOLBoardGenerator : IteratorProtocol {
-    fileprivate let max : (Column:Int,Row:Int,State: GOLBoardState)
+    fileprivate let max : (column:Int,row:Int,state: GOLBoardState)
     fileprivate let board : GOLBoard
-    fileprivate var current : (Column:Int,Row:Int,State: GOLBoardState) = (0,0,GOLBoardState.dead)
+    fileprivate var current : (column:Int,row:Int,state: GOLBoardState) = (0,0,GOLBoardState.dead)
+    
     init(board : GOLBoard,columns : Int, rows : Int) {
         self.max = (columns,rows,.dead)
         self.current = (0,0,.dead)
         self.board = board
     }
     public mutating func next() -> (Int,Int,GOLBoardState)? {
-        if current.Row == self.max.Row {
+        if current.row == self.max.row {
             return nil
         }
-        let state = self.board[current.Column,current.Row] ?? .dead
-        let old = (current.Column,current.Row,state)
-        current.Column = (current.Column + 1) % self.max.Column
-        if current.Column == 0 {
-            current.Row = (current.Row + 1)
+        let state = self.board[current.column,current.row] ?? .dead
+        let old = (current.column,current.row,state)
+        current.column = (current.column + 1) % self.max.column
+        if current.column == 0 {
+            current.row += 1
         }
         return old
     }
@@ -53,12 +54,13 @@ public struct GOLBoardGenerator : IteratorProtocol {
 
 public struct GOLBoard : CustomStringConvertible,Equatable {
     static let empty = GOLBoard(rows:0, columns:0)
-    public var size : CGSize {
+    var size : CGSize {
             return CGSize(width:self.columns,height:self.rows)
     }
-    public let rows : Int
-    public let columns : Int
+    let rows : Int
+    let columns : Int
     fileprivate var board : [[GOLBoardState]] = []
+    
     init(rows: Int,columns : Int) {
         self.rows = rows
         self.columns = columns
@@ -76,13 +78,13 @@ public struct GOLBoard : CustomStringConvertible,Equatable {
     
     public subscript(column : Int,row : Int) -> GOLBoardState? {
         get {
-            guard ((column < self.columns) && (row < self.rows)) else {
+            guard (column < self.columns) && (row < self.rows) else {
                 return nil
             }
             return self.board[row][column]
         }
         set {
-            if ((column < self.columns) && (row < self.rows)),let newValue = newValue {
+            if (column < self.columns) && (row < self.rows),let newValue = newValue {
                 board[row][column] = newValue
             }
             
@@ -98,7 +100,7 @@ public struct GOLBoard : CustomStringConvertible,Equatable {
     public func populateBoard() -> GOLBoard {
         var newBoard = GOLBoard(rows: self.rows, columns: self.columns)
         for (col,row,_) in self {
-            newBoard[col,row] = arc4random() % 2 == 0 ? .dead : .alive
+            newBoard[col,row] = Int.random(in: 0...1) == 0 ? .dead : .alive
         }
         return newBoard
     }
@@ -149,11 +151,11 @@ extension GOLBoard : Sequence {
 }
 
 
-// Mark: Helper
+// MARK: Helper
 extension GOLBoard {
     fileprivate func livingNeighbours(_ column : Int, row : Int) -> Int {
         var neighbours = 0
-        let positions = (0..<8).flatMap { GOLNeighbourPosition(rawValue : $0) }
+        let positions = (0..<8).compactMap { GOLNeighbourPosition(rawValue : $0) }
         for pos in positions {
             switch (pos,column,row) {
             case (.topLeft, 1..<self.columns, 1..<self.rows):
@@ -186,7 +188,4 @@ extension GOLBoard {
         }
         return neighbours
     }
-
 }
-
-

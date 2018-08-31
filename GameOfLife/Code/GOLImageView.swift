@@ -14,6 +14,7 @@ import UIKit
     static let animationInterval : TimeInterval = 1
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         self.image = UIImage(named: "Orb")?.withRenderingMode(.alwaysTemplate)
         self.alpha = 0.9
         self.state = .dead
@@ -27,12 +28,14 @@ import UIKit
     }
     
     
-    internal func setImageViewState(_ state : GOLBoardState, animated : Bool = false, withAnimationInterval animationInterval : TimeInterval = GOLImageView.animationInterval) {
+    internal func setImageViewState(_ state : GOLBoardState,
+                                    animated : Bool = false,
+                                    withAnimationInterval animationInterval : TimeInterval = GOLImageView.animationInterval) {
         let isAlive = state == .alive
         if animated
         {
             self.isHidden = isAlive ? false : self.isHidden
-            UIView.animate(withDuration: animationInterval, animations: { () -> Void in
+            UIView.animate(withDuration: animationInterval, animations: {
                 self.transform = isAlive ? CGAffineTransform.identity : self.defaultTransform
                 self.tintColor = isAlive ? UIColor.green : UIColor.gray
                 }, completion: { _ in
@@ -49,5 +52,3 @@ import UIKit
     }
     
 }
-
-

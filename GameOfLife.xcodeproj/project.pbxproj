@@ -15,6 +15,7 @@
 		561A99161C5813B100673D0E /* GOLTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A99151C5813B100673D0E /* GOLTimer.swift */; };
 		56857FA41D96FE3C00CC5E42 /* GOLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56857FA31D96FE3C00CC5E42 /* GOLView.swift */; };
 		56939C0F1C593F32007C7793 /* GOLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56939C0E1C593F32007C7793 /* GOLImageView.swift */; };
+		9A2313422D44EA0959359949 /* libPods-GameOfLife.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CD69C162CF3216E42E8C266 /* libPods-GameOfLife.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,9 @@
 		561A99151C5813B100673D0E /* GOLTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLTimer.swift; sourceTree = "<group>"; };
 		56857FA31D96FE3C00CC5E42 /* GOLView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLView.swift; sourceTree = "<group>"; };
 		56939C0E1C593F32007C7793 /* GOLImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLImageView.swift; sourceTree = "<group>"; };
+		5AE47492DE5AB42854C0DFD6 /* Pods-GameOfLife.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameOfLife.release.xcconfig"; path = "Pods/Target Support Files/Pods-GameOfLife/Pods-GameOfLife.release.xcconfig"; sourceTree = "<group>"; };
+		7E67D19FB912ED5C60EE2D3E /* Pods-GameOfLife.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameOfLife.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GameOfLife/Pods-GameOfLife.debug.xcconfig"; sourceTree = "<group>"; };
+		8CD69C162CF3216E42E8C266 /* libPods-GameOfLife.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GameOfLife.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,17 +39,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A2313422D44EA0959359949 /* libPods-GameOfLife.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		085C83925CCFEE0EFDCE5BA7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7E67D19FB912ED5C60EE2D3E /* Pods-GameOfLife.debug.xcconfig */,
+				5AE47492DE5AB42854C0DFD6 /* Pods-GameOfLife.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		561A98E21C58007500673D0E = {
 			isa = PBXGroup;
 			children = (
 				561A98ED1C58007500673D0E /* GameOfLife */,
 				561A98EC1C58007500673D0E /* Products */,
+				085C83925CCFEE0EFDCE5BA7 /* Pods */,
+				90F6137BFD876862EE9D2953 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,6 +97,14 @@
 			path = Code;
 			sourceTree = "<group>";
 		};
+		90F6137BFD876862EE9D2953 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8CD69C162CF3216E42E8C266 /* libPods-GameOfLife.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -88,9 +112,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 561A99081C58007500673D0E /* Build configuration list for PBXNativeTarget "GameOfLife" */;
 			buildPhases = (
+				88282E2643AC2FD2626C3538 /* [CP] Check Pods Manifest.lock */,
 				561A98E71C58007500673D0E /* Sources */,
 				561A98E81C58007500673D0E /* Frameworks */,
 				561A98E91C58007500673D0E /* Resources */,
+				563BC75C2138966E004ECC76 /* Swift Lint */,
 			);
 			buildRules = (
 			);
@@ -108,13 +134,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = SAMedialabs;
 				TargetAttributes = {
 					561A98EA1C58007500673D0E = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = RF4LJPC23U;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -147,6 +173,41 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		563BC75C2138966E004ECC76 /* Swift Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Swift Lint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n\n";
+		};
+		88282E2643AC2FD2626C3538 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GameOfLife-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		561A98E71C58007500673D0E /* Sources */ = {
@@ -188,12 +249,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -240,12 +303,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -276,27 +341,31 @@
 		};
 		561A99091C58007500673D0E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7E67D19FB912ED5C60EE2D3E /* Pods-GameOfLife.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RF4LJPC23U;
 				INFOPLIST_FILE = GameOfLife/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.samedialabs.GameOfLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
 		561A990A1C58007500673D0E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5AE47492DE5AB42854C0DFD6 /* Pods-GameOfLife.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RF4LJPC23U;
 				INFOPLIST_FILE = GameOfLife/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.samedialabs.GameOfLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
