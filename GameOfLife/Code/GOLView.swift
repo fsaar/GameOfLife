@@ -13,7 +13,6 @@ extension CGPoint : Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(x)
         hasher.combine(y)
-
     }
 }
 
@@ -33,8 +32,13 @@ class GOLView: UIView {
         }
     }
     fileprivate var imageViewList : [CGPoint : GOLImageView] = [:]
+}
 
-    fileprivate func transitionBoard(from: GOLBoard, to: GOLBoard) {
+//
+// MARK: - Helper
+//
+extension GOLView {
+    func transitionBoard(from: GOLBoard, to: GOLBoard) {
         for (col,row,oldState) in from {
             let newState = to[col,row]
             if let newState = newState , newState != oldState,
@@ -44,7 +48,7 @@ class GOLView: UIView {
         }
     }
     
-    fileprivate func showBoard(_ animated : Bool = false) {
+    func showBoard(_ animated : Bool = false) {
         guard let board = board else {
             return
         }
@@ -59,5 +63,4 @@ class GOLView: UIView {
         }
         
     }
-
 }

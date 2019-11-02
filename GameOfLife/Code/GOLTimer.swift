@@ -7,25 +7,20 @@
 
 import UIKit
 
-let GOLTimerHandlerDefaultTimerTolerance: Float=1.0
+typealias GOLTimerHandler = (_ timer : GOLTimer)->()
 
-public typealias GOLTimerHandler = (_ timer : GOLTimer)->()
-
-@objc final public class GOLTimer: NSObject {
+final class GOLTimer: NSObject {
     fileprivate let timerInterval : TimeInterval
-    var currentTimerInterval : TimeInterval {
-        return self.timerInterval
-    }
     fileprivate let timerHandler  : GOLTimerHandler?
     fileprivate var timer : Timer? = nil
-    public var hasStarted : Bool  {
+    var hasStarted : Bool  {
         let enabled=self.timer == nil ? false : true
         return (enabled)
     }
     
-    public init?(timerInterVal: TimeInterval,timerHandler:@escaping GOLTimerHandler) {
-        self.timerInterval=TimeInterval(timerInterVal)
-        self.timerHandler=timerHandler
+    init?(timerInterVal: TimeInterval,timerHandler:@escaping GOLTimerHandler) {
+        self.timerInterval = TimeInterval(timerInterVal)
+        self.timerHandler = timerHandler
         super.init()
         let isZeroOrNegative =  self.timerInterval <= TimeInterval(0)
         if isZeroOrNegative
@@ -34,16 +29,15 @@ public typealias GOLTimerHandler = (_ timer : GOLTimer)->()
         }
     }
         
-    public func start()
+    func start()
     {
         stop()
         self.timer = Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: true) { [weak self] _ in
-            guard let strongSelf = self else {
+            guard let self = self else {
                 return
             }
-            self?.timerHandler?(strongSelf)
+            self.timerHandler?(self)
         }
-        
     }
     
     deinit
@@ -51,7 +45,7 @@ public typealias GOLTimerHandler = (_ timer : GOLTimer)->()
         stop()
     }
     
-    public func stop()
+    func stop()
     {
         self.timer?.invalidate()
         self.timer = nil

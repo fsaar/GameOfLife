@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc class GOLBoardViewController: UIViewController {
+class GOLBoardViewController: UIViewController {
     @IBOutlet weak var golView : GOLView!
     fileprivate var iterations : Int = 0
     static let gridElemetSize = CGSize(width: 40.0,height: 40.0)
@@ -56,25 +56,24 @@ import UIKit
     }
 }
 
-// MARK: Helper
-extension GOLBoardViewController {
+//
+// MARK: - Helper
+//
+fileprivate extension GOLBoardViewController {
     
-    fileprivate func initBoard() {
+     func initBoard() {
         iterations = 0
         board = GOLBoard(rows: Int(boardSize.height), columns: Int(boardSize.width))
         board = board.populateBoard()
     }
     
-    fileprivate func showDialog() {
+    func showDialog() {
         let sheet = UIAlertController(title: "Game Over after \(iterations) rounds", message: "Press 'Restart' to restart", preferredStyle: .alert)
-        let restartAction = UIAlertAction.init(title: "Restart", style: .default) { [weak self] _ in
+        let restartAction = UIAlertAction(title: "Restart", style: .default) { [weak self] _ in
             self?.initBoard()
             self?.timer?.start()
         }
         sheet.addAction(restartAction)
         self.present(sheet, animated: true, completion: nil)
-
     }
-    
-    
 }

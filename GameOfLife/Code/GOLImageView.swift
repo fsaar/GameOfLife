@@ -8,10 +8,10 @@
 import UIKit
 
 
-@objc internal class GOLImageView : UIImageView {
+class GOLImageView : UIImageView {
     open fileprivate(set) var state : GOLBoardState  = .dead
     let defaultTransform = CGAffineTransform.identity.scaledBy(x: 0.01, y: 0.01)
-    static let animationInterval : TimeInterval = 1
+    fileprivate static let animationInterval : TimeInterval = 1
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -23,12 +23,11 @@ import UIKit
         self.isHidden = true
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable) required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    
-    internal func setImageViewState(_ state : GOLBoardState,
+    func setImageViewState(_ state : GOLBoardState,
                                     animated : Bool = false,
                                     withAnimationInterval animationInterval : TimeInterval = GOLImageView.animationInterval) {
         let isAlive = state == .alive
@@ -36,17 +35,17 @@ import UIKit
         {
             self.isHidden = isAlive ? false : self.isHidden
             UIView.animate(withDuration: animationInterval, animations: {
-                self.transform = isAlive ? CGAffineTransform.identity : self.defaultTransform
-                self.tintColor = isAlive ? UIColor.green : UIColor.gray
+                self.transform = isAlive ? .identity : self.defaultTransform
+                self.tintColor = isAlive ? .green : .gray
                 }, completion: { _ in
                     self.isHidden = isAlive ? self.isHidden : true
             })
         }
         else
         {
-            self.tintColor = isAlive ? UIColor.green : UIColor.gray
+            self.tintColor = isAlive ? .green : .gray
             self.isHidden = isAlive ? false : true
-            self.transform = isAlive ? CGAffineTransform.identity : self.defaultTransform
+            self.transform = isAlive ? .identity : self.defaultTransform
         }
         
     }
