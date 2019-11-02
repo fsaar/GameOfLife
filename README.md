@@ -1,6 +1,6 @@
 ![](https://img.shields.io/badge/Swift-5.1-orange.svg)
 [![Travis Build Status](https://travis-ci.org/fsaar/GameOfLife.svg?branch=master)](https://travis-ci.org/fsaar/GameOfLife)
-[![Bitrise Build Status](https://app.bitrise.io/app/8986e73ef43455ae/status.svg?token=VugX1NqCHrTum84C_1AngQ&branch=master)](https://www.bitrise.io/app/8986e73ef43455ae)
+[![Bitrise Build Status](https://app.bitrise.io/app/5952c8dcbc04ac36/status.svg?token=D7kkMoeW4cg7G2Ep7kLgfg&branch=master)](https://www.bitrise.io/app/5952c8dcbc04ac36)
 [![Code Climate](https://codeclimate.com/github/fsaar/GameOfLife/badges/gpa.svg)](https://codeclimate.com/github/fsaar/GameOfLife)
 [![Codebeat](https://codebeat.co/badges/b5071e15-59a5-4320-a664-d51f825b986f)](https://codebeat.co/projects/github-com-fsaar-gameoflife-master)
 
