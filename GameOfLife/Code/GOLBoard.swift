@@ -62,6 +62,10 @@ struct GOLBoardGenerator : IteratorProtocol {
 
 
 struct GOLBoard : CustomStringConvertible,Equatable {
+    var isEmpty : Bool {
+        return self == GOLBoard.empty
+    }
+    
     fileprivate enum GOLNeighbourPosition : Int,CaseIterable {
         case topLeft
         case topMiddle

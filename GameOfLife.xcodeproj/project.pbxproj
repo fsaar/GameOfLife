@@ -12,7 +12,6 @@
 		561A99111C5800F800673D0E /* GOLAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A990F1C5800F800673D0E /* GOLAppDelegate.swift */; };
 		561A99121C5800F800673D0E /* GOLBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A99101C5800F800673D0E /* GOLBoardViewController.swift */; };
 		561A99141C58014C00673D0E /* GOLBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A99131C58014C00673D0E /* GOLBoard.swift */; };
-		561A99161C5813B100673D0E /* GOLTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561A99151C5813B100673D0E /* GOLTimer.swift */; };
 		56857FA41D96FE3C00CC5E42 /* GOLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56857FA31D96FE3C00CC5E42 /* GOLView.swift */; };
 		56939C0F1C593F32007C7793 /* GOLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56939C0E1C593F32007C7793 /* GOLImageView.swift */; };
 		9A2313422D44EA0959359949 /* libPods-GameOfLife.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CD69C162CF3216E42E8C266 /* libPods-GameOfLife.a */; };
@@ -26,7 +25,6 @@
 		561A990F1C5800F800673D0E /* GOLAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLAppDelegate.swift; sourceTree = "<group>"; };
 		561A99101C5800F800673D0E /* GOLBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLBoardViewController.swift; sourceTree = "<group>"; };
 		561A99131C58014C00673D0E /* GOLBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLBoard.swift; sourceTree = "<group>"; };
-		561A99151C5813B100673D0E /* GOLTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLTimer.swift; sourceTree = "<group>"; };
 		56857FA31D96FE3C00CC5E42 /* GOLView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLView.swift; sourceTree = "<group>"; };
 		56939C0E1C593F32007C7793 /* GOLImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLImageView.swift; sourceTree = "<group>"; };
 		5AE47492DE5AB42854C0DFD6 /* Pods-GameOfLife.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameOfLife.release.xcconfig"; path = "Pods/Target Support Files/Pods-GameOfLife/Pods-GameOfLife.release.xcconfig"; sourceTree = "<group>"; };
@@ -91,7 +89,6 @@
 				561A99101C5800F800673D0E /* GOLBoardViewController.swift */,
 				56939C0E1C593F32007C7793 /* GOLImageView.swift */,
 				561A99131C58014C00673D0E /* GOLBoard.swift */,
-				561A99151C5813B100673D0E /* GOLTimer.swift */,
 				56857FA31D96FE3C00CC5E42 /* GOLView.swift */,
 			);
 			path = Code;
@@ -220,7 +217,6 @@
 				561A99111C5800F800673D0E /* GOLAppDelegate.swift in Sources */,
 				56857FA41D96FE3C00CC5E42 /* GOLView.swift in Sources */,
 				561A99141C58014C00673D0E /* GOLBoard.swift in Sources */,
-				561A99161C5813B100673D0E /* GOLTimer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
