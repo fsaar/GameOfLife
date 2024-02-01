@@ -1,9 +1,4 @@
-//
-//  GameOfLifeApp.swift
-//  GameOfLife
-//
-//  Created by Frank Saar on 23/01/2024.
-//
+
 
 import SwiftUI
 
@@ -11,7 +6,7 @@ import SwiftUI
 struct GameOfLifeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().background(.black)
         }
     }
 }
