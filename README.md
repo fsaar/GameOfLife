@@ -3,5 +3,5 @@
 # The Game of Life 
 
 An implementation of the game of life in Swift / SwiftUI. Rules of the game can be found [here](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
-![](https://https://github.com/fsaar/GameOfLife/assets/animated.gif)
+![](https://github.com/fsaar/GameOfLife/blob/master/Assets/animated.gif)
 
