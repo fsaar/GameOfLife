@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/Swift-5.1-orange.svg)
+![](https://img.shields.io/badge/Swift-5.9-green.svg)
 
 # The Game of Life 
 
