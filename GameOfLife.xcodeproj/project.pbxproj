@@ -12,6 +12,7 @@
 		564C61C42B60589F0092E246 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 564C61C32B60589F0092E246 /* Assets.xcassets */; };
 		564C61C72B60589F0092E246 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 564C61C62B60589F0092E246 /* Preview Assets.xcassets */; };
 		564C61D12B6058A00092E246 /* GOLBoardStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564C61D02B6058A00092E246 /* GOLBoardStateTests.swift */; };
+		56BA508D2B76146400260A32 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 56BA508C2B76146400260A32 /* README.md */; };
 		56FAC2832B619AA1000CA557 /* GOLBoardPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FAC2822B619AA1000CA557 /* GOLBoardPublisher.swift */; };
 		56FAC2852B619E17000CA557 /* GOLBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FAC2842B619E17000CA557 /* GOLBoardView.swift */; };
 		56FAC2872B619E4D000CA557 /* GOLBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FAC2862B619E4D000CA557 /* GOLBoard.swift */; };
@@ -39,6 +40,7 @@
 		564C61C62B60589F0092E246 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		564C61CC2B6058A00092E246 /* GameOfLifeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameOfLifeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		564C61D02B6058A00092E246 /* GOLBoardStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GOLBoardStateTests.swift; sourceTree = "<group>"; };
+		56BA508C2B76146400260A32 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		56FAC2822B619AA1000CA557 /* GOLBoardPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GOLBoardPublisher.swift; sourceTree = "<group>"; };
 		56FAC2842B619E17000CA557 /* GOLBoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLBoardView.swift; sourceTree = "<group>"; };
 		56FAC2862B619E4D000CA557 /* GOLBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLBoard.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 		564C61B32B60589D0092E246 = {
 			isa = PBXGroup;
 			children = (
+				56BA508C2B76146400260A32 /* README.md */,
 				564C61BE2B60589D0092E246 /* GameOfLife */,
 				564C61CF2B6058A00092E246 /* GameOfLifeTests */,
 				564C61BD2B60589D0092E246 /* Products */,
@@ -210,6 +213,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56BA508D2B76146400260A32 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

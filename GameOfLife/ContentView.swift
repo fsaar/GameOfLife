@@ -24,7 +24,7 @@ struct ContentView: View {
                     
             }
             else {
-                Text("Initialising ...").font(.headline).background(.white)
+                Text(LocalizedStringKey("Initialising ...")).font(.headline).background(.white)
             }
         }
         .onReceive(self.boardPublisher.board) { board in
